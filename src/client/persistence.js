@@ -3,7 +3,8 @@
 export function babeldummy() {};
 
 function isLively4Script(node) {
-    return node.tagName.toLocaleLowerCase() == 'script'
+    return node.tagName
+        && node.tagName.toLocaleLowerCase() == 'script'
         && node.type == 'lively4script'
 }
 
@@ -49,6 +50,14 @@ function getURL(){
 }
 
 function saveDOM() {
+    var check = $("#persistToGithub");
+    if (!check) return;
+    
+    if (check.size() > 0 && !check[0].checked) {
+        console.log("Persist to github not checked. Changes will not be pushed.");
+        return;
+    }
+
     var world = $("html").clone();
     world.find("#editor").empty();
     world.find("#console").empty();
